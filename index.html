@@ -133,17 +133,21 @@
       <div class="statement-head">
         <div>
           <h2 id="kTitle">KPI FE</h2>
-          <p id="kSub">Metric departemen diturunkan ke tim FE, anggota, lalu tiket. Pilih satu piramid untuk melihat rinciannya.</p>
+          <p id="kSub">Metric departemen diturunkan ke tim FE, anggota, lalu tiket.</p>
         </div>
         <p class="pressed" id="kStamp"></p>
       </div>
-      <div class="minis" id="kMinis"></div>
+      <p class="minis-hint" id="kHint">Klik salah satu metric untuk melihat rinciannya: tim FE, tiap anggota, dan daftar tiketnya.</p>
+      <div class="minis" id="kMinis" role="tablist" aria-label="Metric departemen"></div>
       <div id="kHidden" class="hidden-metrics"></div>
     </section>
 
     <div class="sections">
-      <section class="panel" aria-labelledby="kDetailTitle">
-        <h2 id="kDetailTitle">Rincian</h2>
+      <section class="panel detail" id="kDetail" aria-labelledby="kDetailTitle">
+        <div class="detail-head">
+          <h2 id="kDetailTitle">Rincian</h2>
+          <button class="linkish" type="button" id="kBack">↑ Pilih metric lain</button>
+        </div>
         <p class="sub" id="kDetailSub"></p>
         <div id="kPyramid" class="pyr"></div>
       </section>
@@ -478,17 +482,21 @@ function renderKpi() {
     const tier3 = m.mode === "team"
       ? `<span class="t3 team-note">Level tim saja</span>`
       : `<span class="t3 people">${m.members.map((x) => `<span><b>${esc(x.name)}</b>${x.tickets}</span>`).join("")}</span>`;
-    return `<button class="mini" type="button" data-id="${m.id}" aria-pressed="${m.id === KSEL}">
+    const sel = m.id === KSEL;
+    return `<button class="mini" type="button" role="tab" data-id="${m.id}" aria-selected="${sel}" aria-controls="kDetail">
       <span class="t1"><span class="kind">${esc(m.kind || "")}</span><b>${esc(shortMetric(m.name))}</b>
         <span class="dept">Target ${targetTxt(m)} · Actual ${pctTxt(m.actualDept)}</span></span>
       <span class="t2">${m.mode === "team" ? esc(m.countLabel || "Tiket") + ": " : "FE: "}<b>${fe.tickets ?? 0}</b> tiket<br>
         Deployed ${pctTxt(fe.deployedPct)} · Lolos QA ${pctTxt(fe.qaPct)}</span>
       ${tier3}
+      <span class="cta">${sel ? "Ditampilkan di bawah ↓" : "Lihat rincian ↓"}</span>
     </button>`;
   }).join("");
   $("#kMinis").querySelectorAll(".mini").forEach((b) => b.addEventListener("click", () => {
     KSEL = b.dataset.id; KMEMBER = ""; renderKpi();
-    $("#kDetailTitle").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $("#kDetail").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    $("#kDetail").classList.remove("flash"); void $("#kDetail").offsetWidth; $("#kDetail").classList.add("flash");
   }));
   const hidden = d.metrics.filter((m) => m.mode === "hidden");
   $("#kHidden").innerHTML = hidden.length
@@ -520,10 +528,10 @@ function renderPyramid() {
   const m = KPI.metrics.find((x) => x.id === KSEL);
   if (!m) { $("#kPyramid").innerHTML = `<p class="sub">Belum ada metric untuk quarter ini.</p>`; $("#kDetailSub").textContent = ""; return; }
   const fe = m.fe || {};
-  $("#kDetailTitle").textContent = shortMetric(m.name);
+  $("#kDetailTitle").textContent = "Rincian: " + shortMetric(m.name);
   $("#kDetailSub").textContent = m.mode === "team"
     ? "Diukur di level tim saja. " + (m.modeReason || "")
-    : "Departemen di puncak, lalu tim FE, anggota, dan tiket. Pilih anggota untuk menyaring tiket.";
+    : "Departemen di puncak, lalu tim FE, anggota, dan tiket. Klik kartu anggota untuk menampilkan tiket orang itu saja.";
   const src = fe.bySource ? Object.entries(fe.bySource).filter(([, n]) => n).map(([k, n]) => `<span class="tag ${k !== "notion" ? "tag--src" : ""}">${n} ${k === "notion" ? "dari Notion" : SRC_LABEL[k]}</span>`).join("") : "";
   const dept = `<div class="tier tier-1">
       <span class="tier-name">Departemen</span>
@@ -547,6 +555,7 @@ function renderPyramid() {
         <span class="who"><span class="sw" style="--c:${COLORS[i]}"></span>${esc(x.name)}</span>
         <span class="figs"><span><b>${x.tickets}</b> tiket</span><span><b>${fmt(x.points)}</b> poin</span></span>
         ${meter(x.deployedPct, "var(--st-7)", "Deployed")}${meter(x.qaPct, "var(--st-5)", "Lolos QA")}
+        <span class="cta">${x.name === KMEMBER ? "Tiket ditampilkan ↓ (klik lagi untuk semua)" : "Lihat tiket " + esc(x.name) + " ↓"}</span>
       </button>`).join("") + `</div></div>`;
     if (KMEMBER) ids = m.members.find((x) => x.name === KMEMBER).ticketIds;
   }
@@ -606,6 +615,10 @@ const boot = () => setView(VIEW);
 $("#tabRekap").addEventListener("click", () => setView("rekap"));
 $("#tabKpi").addEventListener("click", () => setView("kpi"));
 $("#kq").addEventListener("change", () => { KSEL = null; KMEMBER = ""; loadKpi(); });
+$("#kBack").addEventListener("click", () => {
+  $("#kHint").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  $(`#kMinis .mini[data-id="${KSEL}"]`)?.focus({ preventScroll: true });
+});
 document.querySelector(".tabs").addEventListener("keydown", (e) => {
   if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
   const next = VIEW === "kpi" ? "rekap" : "kpi";
