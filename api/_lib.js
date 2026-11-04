@@ -35,7 +35,7 @@ export const TEAM = [
   { id: "b734e51f-9d2b-46e9-91ae-5b08a42462c1", name: "Galang", full: "Galang Kerta" },
 ];
 
-async function notion(method, path, body) {
+export async function notion(method, path, body) {
   const token = process.env.NOTION_TOKEN;
   if (!token) throw new Error("NOTION_TOKEN not configured");
   for (let attempt = 0; attempt < 4; attempt++) {
@@ -55,7 +55,7 @@ async function notion(method, path, body) {
   throw new Error("Notion rate limited");
 }
 
-async function queryAll(db, filter) {
+export async function queryAll(db, filter) {
   const out = [];
   let cursor;
   do {
@@ -68,7 +68,7 @@ async function queryAll(db, filter) {
   return out;
 }
 
-const plain = (p) => {
+export const plain = (p) => {
   if (!p) return null;
   const v = p[p.type];
   if (p.type === "title" || p.type === "rich_text") return v.map((x) => x.plain_text).join("");
@@ -156,6 +156,9 @@ export async function buildReport(period, { refresh = false } = {}) {
       status, stage, weight: w ? Number(w) : null, agent: plain(pr["Built by"]) === "Agent FE",
       sprintId: latest.id, sprint: latest.name, sprintStart: latest.start, members,
       issueType: plain(pr["Issue Type"]),
+      // KPI pyramid only (ignored by the rekap UI): Epic relation, page id for >25-item pagination.
+      pageId: pg.id, epicIds: (pr["Epic"]?.relation || []).map((r) => r.id.replace(/-/g, "")),
+      epicPropId: pr["Epic"]?.id || null, epicHasMore: !!pr["Epic"]?.has_more,
     });
   }
   tickets.sort((a, b) => b.sprintStart.localeCompare(a.sprintStart) || a.id.localeCompare(b.id));

@@ -1,0 +1,1363 @@
+{
+ "capturedAt": "2026-11-04",
+ "source": "Notion MCP rows mode, Dev Tickets, Team=Front-end, Sprint 20-22",
+ "rows": [
+  {
+   "sprint": "S20",
+   "taskId": "4885",
+   "title": "\\[Funeral Director Fix\\] \\[email-templates\\] FD emails — body, button and footer copy",
+   "status": "Not started",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3bcc6dc1a8eb81d48bebe57eaa8ae028"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4859",
+   "title": "\\[FE\\]\\[LC Discount 1a\\] Support Scheduled voucher status in voucher list",
+   "status": "Blocked",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3b2c6dc1a8eb80e4b979e5c84538abf8"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4858",
+   "title": "\\[BUG-FIX\\] Event form: switching Event type keeps the old Sub type — stale subtype silently saved on create",
+   "status": "Deployed",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4839",
+   "title": "\\[BUG-FIX\\] \\[Invoice\\] Save button greyed out in Edit Sale Settings (Default Due Term) for client account only",
+   "status": "Not bug",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4815",
+   "title": "\\[FE\\] Public org link sends org\\_id on sections-in-viewport",
+   "status": "Deployed",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3f1c6dc1a8eb81e4b943e844281c57fa"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4812",
+   "title": "\\[BUG-FIX\\] \\[FE\\] Disable Save while a save request is in progress",
+   "status": "Deployed",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1",
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4786",
+   "title": "\\[FE\\] Public org link shows only the org's cemeteries on the map",
+   "status": "Deployed",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3f1c6dc1a8eb81e4b943e844281c57fa"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4760",
+   "title": "\\[BUG-FIX\\] \\[Maps\\] Mausoleum / Niche Wall plots flash on the map before they hide (below zoom 27)",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4720",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Back from a plot returns to the cemetery map",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb8134846dedd5fbbf4ff0"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4719",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Back button returns one step at a time",
+   "status": "Deployed",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4718",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] No failed cemetery-layer tiles and a clear fallback when imagery is missing",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb8134846dedd5fbbf4ff0"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4716",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Request orthophoto tiles only inside the flown area",
+   "status": "Deployed",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4715",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] One map API call per load, pan and zoom",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb8134846dedd5fbbf4ff0"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4714",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] One call per endpoint when a cemetery opens",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4712",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Stop re-downloading the cemetery list (limit=0) on zoom, pan and idle",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4711",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Remove backup and import status checks from the cemetery sidebar",
+   "status": "Deployed",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb8134846dedd5fbbf4ff0"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4710",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] No v1\\_user\\_list call for logged-out visitors",
+   "status": "Deployed",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4709",
+   "title": "\\[BUG-FIX\\] VERIFIED · Public embed: \"More people\" drops no-header, so the Chronicle header and LOGIN appear inside customer websites",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4704",
+   "title": "\\[FE\\]\\[Map Perf\\] Stop viewport requests outside listed cemetery bounds",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S20",
+   "taskId": "4701",
+   "title": "\\[Bug\\] APPLY shows voucher success before validation",
+   "status": "Deployed",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3b2c6dc1a8eb80e4b979e5c84538abf8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "3923",
+   "title": "\\[CHLOE Development\\] \\[FE\\] Chloe chat panel UI design + quota / max-char / remaining-token states",
+   "status": "Deployed",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4272",
+   "title": "\\[BUG\\] Bulk edit Plot, Interment and ROI fail silently — show backend error on load and save (incl. Status 'Vacant')",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4953",
+   "title": "\\[HOT-FIX\\] Lock Edit Plot actions during Edit Plot Id until the renamed plot is reloaded",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81118096e6632d5a658c"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4951",
+   "title": "\\[HOT-FIX\\] Plot polygon disappears from map after changing Plot ID (Edit Plot ID)",
+   "status": "Ready for release",
+   "weight": "5",
+   "issueType": "Bug",
+   "assignee": [
+    "user://a236cf97-000c-4139-841d-f6e0bc3729cc"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81118096e6632d5a658c"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4923",
+   "title": "\\[Search Service\\] Use the new search endpoints in the Chronicle app and public site \\[FE\\]",
+   "status": "Archived",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "401c6dc1a8eb81de8445f21fd28af897"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4920",
+   "title": "\\[HOT-FIX\\] New Event from plot panel stays open after Save, and repeat Save clicks create duplicate events",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4918",
+   "title": "\\[HOT-FIX\\] First photo on a plot opens to endless \"Loading data...\" right after upload",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4912",
+   "title": "\\[26Q4TECH\\] Report Service (FE): point Reports, plot PDF and EXPORT to the new report service (dev, project, prod)",
+   "status": "Blocked",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3ffc6dc1a8eb8191949fff9977727ef9"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4910",
+   "title": "\\[HOT-FIX\\] Error \"We couldn't process your changes at this time\" when editing Plot ID AN B 62 → AN B 61 - Macedon Cemetery",
+   "status": "Archived",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4909",
+   "title": "\\[HOTFIX\\]\\[Bug\\]\\[FE\\]\\[Map\\] Section outlines stay hidden after direct high-to-low zoom",
+   "status": "Deployed",
+   "weight": "5",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4904",
+   "title": "\\[HOT-FIX\\] Tiles not showing in cemetery (Great Stupa)",
+   "status": "Not bug",
+   "weight": "5",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4896",
+   "title": "\\[hotfix\\] \\[Public Map\\] Plots for Sale crashes on empty response",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://a236cf97-000c-4139-841d-f6e0bc3729cc"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4889",
+   "title": "\\[BUG-FIX\\] \\[Search\\] Reserved plots AC E 48 & 49 not listed when searching 'Thomas' (Macedon)",
+   "status": "Not bug",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4886",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Bundle budgets that fail the build on +10% growth",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4887",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Load Leaflet plugins and Swiper only where they are used",
+   "status": "Ready for release with notes",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4868",
+   "title": "\\[FE\\]\\[LC Discount 1a\\] Cemetery manager opens the voucher view from Organisation Settings, not the sidebar",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3b2c6dc1a8eb80e4b979e5c84538abf8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4865",
+   "title": "\\[FE\\]\\[LC Discount 1a\\] Usage limit required in the voucher form; remove the unlimited state",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3b2c6dc1a8eb80e4b979e5c84538abf8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4866",
+   "title": "\\[FE\\]\\[LC Discount 1a\\] Currency banner only when the ledger shows more than one currency",
+   "status": "Ready for release with notes",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3b2c6dc1a8eb80e4b979e5c84538abf8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4863",
+   "title": "\\[Bug\\] Persons table All Cemeteries view shows only the first cemetery for multi-cemetery person",
+   "status": "Ready for release",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4862",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] ?org= links download the full cemetery list (limit=0) twice on page open",
+   "status": "Blocked",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817aa4d3e42d56ff7939"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4852",
+   "title": "\\[MASTER\\]\\[Security\\] FE white-hat audit: frontend-public + frontend-client, 12 findings (token-in-URL, stored XSS, deps, headers)",
+   "status": "Ready testing dev",
+   "weight": "2",
+   "issueType": "Task",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb815d9a4efcb19fe48fc4"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4836",
+   "title": "\\[FE\\]\\[Osiris\\] Header badge and Sync activity panel with the Failed tab and Try again",
+   "status": "Blocked",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3dec6dc1a8eb80afa4e2d43b4dcdcb7a"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4835",
+   "title": "\\[FE\\]\\[Osiris\\] My Profile: Osiris credential section with its four states, and Send to Osiris removed",
+   "status": "Blocked",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3dec6dc1a8eb80afa4e2d43b4dcdcb7a"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4829",
+   "title": "\\[Plaque\\] \\[FE\\] Tracking row, REMOVE on the active state, and Plaque toggle rules",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3d7c6dc1a8eb80e98cbfd29804983bf1"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4827",
+   "title": "\\[BUG-FIX\\] \\[FE\\] Sign-in puts the login tokens in the page URL, and Produktly receives them",
+   "status": "Blocked",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4819",
+   "title": "\\[FE\\] Public org link sends org\\_id on lot-in-viewport",
+   "status": "Ready for release with notes",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3f1c6dc1a8eb81e4b943e844281c57fa"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4817",
+   "title": "\\[FE\\] Public org link sends org\\_id on plots-in-viewport",
+   "status": "Ready for release",
+   "weight": "1",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3f1c6dc1a8eb81e4b943e844281c57fa"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4805",
+   "title": "\\[CHLOE\\] \\[FE\\] Panel ready for release: failed state, server limit, AI terms notice",
+   "status": "Blocked",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4749",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Accessible name for the map and icon-only controls",
+   "status": "Need review QA",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb815d9a4efcb19fe48fc4"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4748",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Empty alt on map tiles and an aria-label on the map",
+   "status": "Ready for release",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb815d9a4efcb19fe48fc4"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4746",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Home page meta description, hidden H1 and JSON-LD",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb815d9a4efcb19fe48fc4"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4729",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Keep the map visible while a cemetery opens",
+   "status": "Ready for release with notes",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4728",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] No cemetery photos while the list is closed",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4727",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Fewer third-party scripts and no unused fonts",
+   "status": "Ready for release",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4726",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Load only the web fonts that are used",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4725",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Remove Universal Analytics and defer third-party scripts",
+   "status": "Blocked",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4724",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Load non-map modules on demand and add bundle budgets",
+   "status": "Ready for release with notes",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4723",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Smaller initial JS bundle",
+   "status": "Ready for release with notes",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb817a87cef042d8d1c9d8"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4363",
+   "title": "\\[Bug\\] Regional Settings label not applied consistently on public map — Plot Detail shows FORSALE while tooltip/search show AVAILABLE",
+   "status": "Blocked",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1",
+    "user://b92be135-e99e-4975-afec-16abc0cffc80"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4290",
+   "title": "\\[Bug\\] Edit Interment page renders completely blank when interment.also\\_for is not an array (JS TypeError blocks form patch)",
+   "status": "Ready testing dev",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "4177",
+   "title": "\\[CHLOE Development\\] \\[FE\\] PostHog browser SDK — Chloe panel interaction events, identify & group",
+   "status": "Deployed",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "3946",
+   "title": "\\[FE\\] Frontend — Result rendering with source-attribution links & thumbs feedback control",
+   "status": "Need review Product",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "3945",
+   "title": "\\[CHLOE Development\\] \\[FE\\] Frontend — ChloePanel sidebar Angular component with Pro-tier gate",
+   "status": "Deployed",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "3598",
+   "title": "\\[CHLOE Development\\] \\[FE\\] Embed AI chat sidebar in Chronicle Angular app",
+   "status": "Deployed",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S21",
+   "taskId": "3602",
+   "title": "\\[CHLOE Development\\] \\[FE\\] Source attribution (record links) and per-response thumbs feedback UIa",
+   "status": "Ready testing project",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "359c6dc1a8eb8129b33fc96a13b4278a",
+    "3eac6dc1a8eb801fb17df5af92b23d91"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "5012",
+   "title": "\\[Bug\\]\\[FE\\]\\[Chloe\\] Blank panel on project CA: iframe blocked by CSP",
+   "status": "Ready testing project",
+   "weight": null,
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S22",
+   "taskId": "5004",
+   "title": "\\[Bug\\] Advanced Search: Section dropdown only loads page 1 \\[FE\\]",
+   "status": "Not started",
+   "weight": null,
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4995",
+   "title": "\\[HOT-FIX\\] \\[Sales\\] Create Sale confirmation tells staff to deliver the invoice themselves, but the system already emails it",
+   "status": "Not started",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4981",
+   "title": "\\[HOT-FIX\\] Blank Screen When Generating a Report",
+   "status": "Blocked",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://a236cf97-000c-4139-841d-f6e0bc3729cc"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4975",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Add Life Chronicle and Official Story URLs to sitemap.xml",
+   "status": "Code review",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb815d9a4efcb19fe48fc4"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4969",
+   "title": "\\[BUG\\] Public search results show extra plot-status text before names",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4968",
+   "title": "\\[BUG\\] Reports create form — Report period picker missing; Sales cannot generate",
+   "status": "Ready for release",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4965",
+   "title": "\\[Bug\\] Activity empty state says \"No previous activity\" when a filter hides every entry \\[FE\\]",
+   "status": "Need review QA",
+   "weight": "2",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3e3c6dc1a8eb81b1a6e5c79a0345897f"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4928",
+   "title": "\\[PostHog\\] Per-environment keys, region-prefixed ids, app tag, email scrub and page leave \\[FE\\]",
+   "status": "Need review QA",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "401c6dc1a8eb816792d7cb5239b579a2"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4907",
+   "title": "\\[Bug\\] Next of Kin filter omitted after reopening Advanced Search \\[FE\\]",
+   "status": "Ready for project",
+   "weight": "3",
+   "issueType": "Bug",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": []
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4825",
+   "title": "\\[FE\\]\\[Public Search\\] Table view embed: results table, location in words, auto-resize and tracking",
+   "status": "In progress",
+   "weight": "13",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3ebc6dc1a8eb8036b4e7ec3bac52dc4f"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4967",
+   "title": "\\[FE\\]\\[Public Search\\] Map view embed: organisation header, Back to results and phone fixes",
+   "status": "Ready for project",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3ebc6dc1a8eb8036b4e7ec3bac52dc4f"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4745",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Distinct plot media states and one-line metadata",
+   "status": "Ready for project",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4744",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Plot photo placeholder and clean shareable plot URLs",
+   "status": "Ready for project",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb81c9ad96c86e1029f2a3"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4743",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] One \"coming soon\" message, off the map",
+   "status": "Ready for project",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb81c9ad96c86e1029f2a3"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4741",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Hide empty cemetery detail rows",
+   "status": "Ready for project",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb81c9ad96c86e1029f2a3"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4740",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] First story card fully visible in the carousel",
+   "status": "Code review",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb81c9ad96c86e1029f2a3"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4739",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Side panel slides in without reflowing text",
+   "status": "Ready for project",
+   "weight": "1",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb81c9ad96c86e1029f2a3"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4738",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Ask for location only from the locate control on mobile",
+   "status": "Ready for project",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4737",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Ask for location only from the locate button",
+   "status": "Ready for project",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4736",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Current section name visible at every zoom",
+   "status": "Code review",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4735",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Plot outlines and status legend visible without a click",
+   "status": "Ready for release with notes",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4734",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Login\\] Show the search scope and a next step on zero results",
+   "status": "Code review",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://346199eb-6b5d-4a25-bcc8-4d2ce2406dab"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4733",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] Show the search scope inside a cemetery",
+   "status": "Ready for project",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://b734e51f-9d2b-46e9-91ae-5b08a42462c1"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4732",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] A search result opens the cemetery like a marker click",
+   "status": "Blocked",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4731",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] A cluster click zooms in at most 3 levels",
+   "status": "Ready for project",
+   "weight": "2",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4730",
+   "title": "\\[FE\\]\\[Map Audit\\]\\[Non-login\\] World view fills the screen and starts near the visitor",
+   "status": "Need review QA",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://5033a0de-a77c-45c9-8be1-d36a89a1775e"
+   ],
+   "epic": [
+    "3eac6dc1a8eb813caadee54e6fcd0785",
+    "bfdc6dc1a8eb83ae9ed901f87c48af88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4535",
+   "title": "\\[WCAG Report\\] 2026-09-10 PROD-US — Life Chronicle public: modal trap and form contrast block AA claim",
+   "status": "Blocked",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "40cc6dc1a8eb810a868dfd6488535d88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4531",
+   "title": "\\[WCAG Report\\] 2026-09-10 PROD-US — Search ROI Holder Public Access",
+   "status": "Ready testing project",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "40cc6dc1a8eb810a868dfd6488535d88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4496",
+   "title": "\\[WCAG Report\\] 2026-09-07 PROD-US — Public Browsing",
+   "status": "In testing project",
+   "weight": "8",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "40cc6dc1a8eb810a868dfd6488535d88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4461",
+   "title": "\\[WCAG Report\\] 2026-09-04 PROD-US — Login to Chronicle",
+   "status": "Ready testing project",
+   "weight": "5",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "40cc6dc1a8eb810a868dfd6488535d88"
+   ]
+  },
+  {
+   "sprint": "S22",
+   "taskId": "4405",
+   "title": "\\[WCAG Report\\] 2026-09-02 PROD-US — Auth and Onboarding",
+   "status": "Need review Product",
+   "weight": "3",
+   "issueType": "Ticket",
+   "assignee": [
+    "user://c7749b82-accf-47ab-878d-3751554b9664"
+   ],
+   "epic": [
+    "40cc6dc1a8eb810a868dfd6488535d88"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "quarters": {
+    "2026-Q4": {
+      "metricsDb": "2b1c6dc1a8eb80d29457df1a171d4fc3",
+      "metrics": {
+        "3f7c6dc1a8eb80328305fc5808981b5a": {
+          "fe": "hidden",
+          "reason": "Uptime: tidak ada kontribusi tiket FE langsung",
+          "by": "Koyo",
+          "date": "2026-11-04"
+        },
+        "3f7c6dc1a8eb80e499e1c8ecb8f9adef": {
+          "fe": "team",
+          "count": { "titleRegex": "hot[\\s-]?fix", "flags": "i", "label": "Tiket hotfix FE (proxy insiden)" },
+          "reason": "Customer Impacting Incident: diukur di level tim saja, dengan jumlah tiket hotfix FE sebagai proxy. Tidak diturunkan ke anggota.",
+          "by": "Koyo",
+          "date": "2026-11-04"
+        }
+      },
+      "extraEpics": [
+        {
+          "epic": "3f1c6dc1a8eb81e4b943e844281c57fa",
+          "metric": "2b1c6dc1a8eb81c4997ed8b61b6a55ff",
+          "reason": "Epic Q4 'Org map link shows only the organisation's cemeteries' belum ditautkan ke metric departemen; FE memasukkannya ke Platform Improvement",
+          "by": "Koyo",
+          "date": "2026-11-04"
+        },
+        {
+          "epic": "3b2c6dc1a8eb80e4b979e5c84538abf8",
+          "metric": "2b1c6dc1a8eb8180be88f3c9d8de4d4d",
+          "reason": "Epic Q3 'Life Chronicle discount system [1a]' carry-over: tiket FE-nya dikerjakan di sprint Q4, dihitung ke Product Committed",
+          "by": "Koyo",
+          "date": "2026-11-04"
+        }
+      ],
+      "excludeEpics": [],
+      "rules": [
+        {
+          "when": { "issueType": "Bug", "hasEpic": false },
+          "metric": "2b1c6dc1a8eb81f9b201c123d7125bec",
+          "reason": "Bug FE tanpa epic dihitung ke Bug Metrics",
+          "by": "Koyo",
+          "date": "2026-11-04"
+        }
+      ]
+    }
+  }
+}

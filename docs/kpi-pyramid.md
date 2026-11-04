@@ -34,7 +34,7 @@ Metric departemen  ─►  Metric FE  ─►  Anggota (Koyo / Galang / Dendy)  �
 
 ## 4. `mapping.json`
 
-Lokasinya di root repo dashboard. Ikut ter-deploy dan dibaca server, bukan browser.
+Lokasinya `api/_mapping.json`. File ini ikut ter-bundle ke function `api/kpi.js` (`includeFiles` di `vercel.json`). Isi folder `api/` tidak disajikan sebagai file statis, jadi mapping tidak bisa dibuka publik. Kalau ditaruh di root, file ini akan terbuka untuk publik.
 
 ```json
 {
@@ -71,7 +71,7 @@ Lokasinya di root repo dashboard. Ikut ter-deploy dan dibaca server, bukan brows
 
 ID di atas adalah contoh nyata dari data Q4. Isi finalnya kamu yang putuskan.
 
-- `metrics.<id>.fe`: `"shown"` (default) atau `"hidden"`. Metric yang disembunyikan tidak dibuatkan piramid, tapi tetap terlihat di daftar ringkas.
+- `metrics.<id>.fe`: `"shown"` (default), `"hidden"`, atau `"team"`. Metric `hidden` tidak dibuatkan piramid, tapi tetap terlihat di daftar ringkas. Metric `team` hanya punya node tim, tanpa node anggota. Isinya tiket yang judulnya cocok dengan `count.titleRegex`, misalnya hotfix sebagai proxy insiden. Mode ini tidak memengaruhi penetapan tiket ke metric lain.
 - `extraEpics`: menautkan epic ke metric tanpa menyentuh Notion. Dipakai juga untuk carry-over, misalnya epic Q3 yang tiketnya masih dikerjakan di Q4.
 - `excludeEpics`: kebalikan dari `extraEpics`, dipakai kalau ada epic departemen yang menurut FE bukan kerja FE.
 - `rules`: diterapkan **hanya** pada tiket yang belum punya metric dari Notion maupun `extraEpics`.
@@ -164,7 +164,7 @@ Hanya mode per quarter. Mode rentang sprint tidak dipakai di sini, karena metric
 | 2 | Tab KPI: overview piramid, detail, Di luar KPI, mobile | Deploy ke Vercel |
 | 3 | Skill Hermes untuk PR mapping (opsional) | — |
 
-## 12. Keputusan terbuka
+## 12. Keputusan (diputuskan Koyo 2026-11-04: ikuti semua usulan)
 
 1. **Basis persentase:** jumlah tiket (sama dengan departemen) atau poin? Usulan: tiket sebagai angka utama, poin sebagai angka kedua.
 2. **Metric Uptime dan Customer Impacting Incident:** disembunyikan, atau diberi metric FE pengganti (misalnya jumlah hotfix FE)? Usulan: Uptime disembunyikan. Incident ditampilkan di level tim saja, tanpa node anggota.
@@ -173,3 +173,19 @@ Hanya mode per quarter. Mode rentang sprint tidak dipakai di sini, karena metric
    - LC discount (carry-over Q3) → Committed atau tidak?
    - Bug tanpa epic → Bug Metrics?
 4. **Repo GitHub:** di org Chronicle atau akun pribadi?
+
+### Hasil keputusan
+
+- Persentase utama per jumlah tiket, poin sebagai angka kedua.
+- Uptime: `hidden`. Customer Impacting Incident: `team`, dengan proxy tiket hotfix FE (regex `hot[\s-]?fix`).
+- `extraEpics`: Org map link → Platform Improvement. LC discount (carry-over Q3) → Product Committed.
+- `rules`: Bug tanpa epic → Bug Metrics.
+- Repo GitHub: belum diputuskan.
+
+## 13. Status fase 1 (2026-11-04)
+
+- `git init` + commit baseline.
+- `api/_mapping.json`, `api/_kpi.js` (validasi, penetapan, ringkasan, fetch Notion read-only), `api/kpi.js`.
+- `api/_lib.js`: ekspor helper Notion, tiket ditambah `pageId`/`epicIds`/`epicPropId`/`epicHasMore`. Output rekap lain tidak berubah.
+- `npm test`: 11 uji lulus. Termasuk fixture data nyata 2026-11-04 (92 tiket). Tanpa mapping: 45/16/12/0, di luar 19. Dengan mapping: Platform 49 (45 notion + 4 mapping), Committed 17, Bug 23 (16 + 7 rule), di luar 3.
+- Belum diverifikasi ke Notion live: butuh akses integration ke ProdDev Metrics dan Epic Tracker, plus deploy ber-env.
