@@ -43,22 +43,22 @@
         <p class="meta" id="meta" aria-live="polite"></p>
       </div>
       <div class="tabs" role="tablist" aria-label="Tampilan">
-        <button class="tab" role="tab" id="tabRekap" aria-controls="viewRekap" aria-selected="true" type="button">Rekap</button>
-        <button class="tab" role="tab" id="tabKpi" aria-controls="viewKpi" aria-selected="false" type="button">KPI</button>
+        <button class="tab" role="tab" id="tabKpi" aria-controls="viewKpi" aria-selected="true" type="button">KPI</button>
+        <button class="tab" role="tab" id="tabRekap" aria-controls="viewRekap" aria-selected="false" type="button">Rekap</button>
       </div>
       <div class="tools">
-        <div class="field kpi-only hidden"><label for="kq">Quarter</label>
+        <div class="field kpi-only"><label for="kq">Quarter</label>
           <select id="kq"></select></div>
-        <div class="field rekap-only"><label for="mode">Periode</label>
+        <div class="field rekap-only hidden"><label for="mode">Periode</label>
           <select id="mode"><option value="q">Per quarter</option><option value="range">Rentang sprint</option></select></div>
-        <div class="field rekap-only"><span aria-hidden="true">&nbsp;</span>
+        <div class="field rekap-only hidden"><span aria-hidden="true">&nbsp;</span>
           <select id="q" aria-label="Quarter"></select>
           <span id="rangeBox" class="range hidden">
             <select id="sFrom" aria-label="Dari sprint"></select>
             <span>s/d</span>
             <select id="sTo" aria-label="Sampai sprint"></select>
           </span></div>
-        <div class="field rekap-only"><label for="crit">Dihitung</label>
+        <div class="field rekap-only hidden"><label for="crit">Dihitung</label>
           <select id="crit"></select></div>
         <div class="push">
           <button class="btn" id="refresh" type="button" title="Ambil ulang dari Notion">Refresh</button>
@@ -68,7 +68,7 @@
     </div>
   </header>
 
-  <main class="wrap" id="viewRekap" role="tabpanel" aria-labelledby="tabRekap">
+  <main class="wrap hidden" id="viewRekap" role="tabpanel" aria-labelledby="tabRekap">
     <div id="warn" class="notice hidden" role="status"></div>
 
     <section class="statement stock" aria-labelledby="sheetTitle">
@@ -126,7 +126,7 @@
     </div>
   </main>
 
-  <main class="wrap hidden" id="viewKpi" role="tabpanel" aria-labelledby="tabKpi">
+  <main class="wrap" id="viewKpi" role="tabpanel" aria-labelledby="tabKpi">
     <div id="kWarn" class="notice hidden" role="status"></div>
 
     <section class="statement stock" aria-labelledby="kTitle">
@@ -431,7 +431,7 @@ function renderTickets() {
 
 // ---------------------------------------------------------------- KPI pyramid view
 let KPI = null, KSEL = null, KMEMBER = "";
-let VIEW = location.hash === "#kpi" ? "kpi" : "rekap";
+let VIEW = location.hash === "#rekap" ? "rekap" : "kpi"; // KPI is the default tab
 const pctTxt = (v) => (v == null ? "—" : fmt(v) + "%");
 const SRC_LABEL = { mapping: "mapping FE", rule: "rule" };
 const targetTxt = (m) => (m.target == null ? "—" : m.targetUnit ? fmt(m.target) + " " + m.targetUnit : fmt(m.target) + "%");
@@ -592,7 +592,7 @@ function renderKpiExplain() {
 
 function setView(v) {
   VIEW = v;
-  history.replaceState(null, "", v === "kpi" ? "#kpi" : location.pathname + location.search);
+  history.replaceState(null, "", v === "rekap" ? "#rekap" : location.pathname + location.search);
   $("#tabRekap").setAttribute("aria-selected", String(v === "rekap"));
   $("#tabKpi").setAttribute("aria-selected", String(v === "kpi"));
   $("#viewRekap").classList.toggle("hidden", v !== "rekap");
