@@ -32,6 +32,7 @@ export function validateMapping(m) {
       const w = `${q}.metrics.${id}`;
       if (!HEX32.test(id)) errs.push(`${w}: id harus 32 hex`);
       if (!MODES.includes(e.fe)) errs.push(`${w}: fe harus salah satu ${MODES.join("/")}`);
+      if (e.targetUnit !== undefined && typeof e.targetUnit !== "string") errs.push(`${w}: targetUnit harus teks`);
       if (e.fe === "team") {
         try { new RegExp(e.count?.titleRegex || "", e.count?.flags || ""); } catch { errs.push(`${w}: count.titleRegex tidak valid`); }
         if (!e.count?.titleRegex) errs.push(`${w}: mode team butuh count.titleRegex`);
@@ -131,7 +132,7 @@ export function buildPyramids({ quarter, metrics, tickets, qmap, epicTitles = ne
     const cfg = qmap.metrics?.[m.id] || { fe: "shown" };
     const base = {
       id: m.id, name: m.name, kind: m.kind, target: m.target, actualDept: m.actualDept, url: m.url,
-      epicCount: m.epicIds.length, mode: cfg.fe, modeReason: cfg.reason || null,
+      epicCount: m.epicIds.length, mode: cfg.fe, modeReason: cfg.reason || null, targetUnit: cfg.targetUnit || null,
     };
     if (cfg.fe === "hidden") { out.push(base); continue; }
     if (cfg.fe === "team") {

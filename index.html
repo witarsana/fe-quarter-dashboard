@@ -42,17 +42,23 @@
         <h1>FE Completion <span id="qTitle"></span></h1>
         <p class="meta" id="meta" aria-live="polite"></p>
       </div>
+      <div class="tabs" role="tablist" aria-label="Tampilan">
+        <button class="tab" role="tab" id="tabRekap" aria-controls="viewRekap" aria-selected="true" type="button">Rekap</button>
+        <button class="tab" role="tab" id="tabKpi" aria-controls="viewKpi" aria-selected="false" type="button">KPI</button>
+      </div>
       <div class="tools">
-        <div class="field"><label for="mode">Periode</label>
+        <div class="field kpi-only hidden"><label for="kq">Quarter</label>
+          <select id="kq"></select></div>
+        <div class="field rekap-only"><label for="mode">Periode</label>
           <select id="mode"><option value="q">Per quarter</option><option value="range">Rentang sprint</option></select></div>
-        <div class="field"><span aria-hidden="true">&nbsp;</span>
+        <div class="field rekap-only"><span aria-hidden="true">&nbsp;</span>
           <select id="q" aria-label="Quarter"></select>
           <span id="rangeBox" class="range hidden">
             <select id="sFrom" aria-label="Dari sprint"></select>
             <span>s/d</span>
             <select id="sTo" aria-label="Sampai sprint"></select>
           </span></div>
-        <div class="field"><label for="crit">Dihitung</label>
+        <div class="field rekap-only"><label for="crit">Dihitung</label>
           <select id="crit"></select></div>
         <div class="push">
           <button class="btn" id="refresh" type="button" title="Ambil ulang dari Notion">Refresh</button>
@@ -62,7 +68,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="viewRekap" role="tabpanel" aria-labelledby="tabRekap">
     <div id="warn" class="notice hidden" role="status"></div>
 
     <section class="statement stock" aria-labelledby="sheetTitle">
@@ -116,6 +122,41 @@
       <section class="panel" id="explain" aria-labelledby="hExplain">
         <h2 id="hExplain">Cara membaca &amp; arti filter</h2>
         <div id="explainBody" class="explain"></div>
+      </section>
+    </div>
+  </main>
+
+  <main class="wrap hidden" id="viewKpi" role="tabpanel" aria-labelledby="tabKpi">
+    <div id="kWarn" class="notice hidden" role="status"></div>
+
+    <section class="statement stock" aria-labelledby="kTitle">
+      <div class="statement-head">
+        <div>
+          <h2 id="kTitle">KPI FE</h2>
+          <p id="kSub">Metric departemen diturunkan ke tim FE, anggota, lalu tiket. Pilih satu piramid untuk melihat rinciannya.</p>
+        </div>
+        <p class="pressed" id="kStamp"></p>
+      </div>
+      <div class="minis" id="kMinis"></div>
+      <div id="kHidden" class="hidden-metrics"></div>
+    </section>
+
+    <div class="sections">
+      <section class="panel" aria-labelledby="kDetailTitle">
+        <h2 id="kDetailTitle">Rincian</h2>
+        <p class="sub" id="kDetailSub"></p>
+        <div id="kPyramid" class="pyr"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="hOutside">
+        <h2 id="hOutside">Di luar KPI</h2>
+        <p class="sub">Tiket FE di quarter ini yang tidak masuk metric mana pun, lewat Notion, mapping, maupun rule. Tetap ditampilkan supaya tidak hilang dari hitungan.</p>
+        <div class="scroll" id="kOutside"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="hKExplain">
+        <h2 id="hKExplain">Cara membaca &amp; mapping aktif</h2>
+        <div id="kExplain" class="explain"></div>
       </section>
     </div>
   </main>
@@ -388,11 +429,194 @@ function renderTickets() {
     (rows.length ? "" : `<tr><td colspan="6" class="sub">Tidak ada tiket.</td></tr>`) + "</tbody>";
 }
 
+// ---------------------------------------------------------------- KPI pyramid view
+let KPI = null, KSEL = null, KMEMBER = "";
+let VIEW = location.hash === "#kpi" ? "kpi" : "rekap";
+const pctTxt = (v) => (v == null ? "—" : fmt(v) + "%");
+const SRC_LABEL = { mapping: "mapping FE", rule: "rule" };
+const targetTxt = (m) => (m.target == null ? "—" : m.targetUnit ? fmt(m.target) + " " + m.targetUnit : fmt(m.target) + "%");
+const shortMetric = (n) => String(n).replace(/^\s*\\?\[Deliverable\\?\]\s*/i, "").replace(/\s+-\s+Metrics?\s+Q\d\s+\d{4}\s*$/i, "").replace(/\s+Q\d\s+\d{4}\s*$/i, "").trim();
+
+function meter(value, color, label, target) {
+  const w = value == null ? 0 : Math.max(0, Math.min(100, value));
+  const mark = target != null && target <= 100 ? `<i class="target" style="left:${target}%"></i>` : "";
+  return `<div class="meter-row"><span class="meter-label">${esc(label)}</span>
+    <span class="meter" role="img" aria-label="${esc(label)} ${esc(pctTxt(value))}"><i style="width:${w}%;--c:${color}"></i>${mark}</span>
+    <b class="meter-val">${esc(pctTxt(value))}</b></div>`;
+}
+
+async function loadKpi(refresh) {
+  const params = new URLSearchParams();
+  const q = $("#kq").value || KPI?.quarter;
+  if (q) params.set("q", q);
+  if (refresh) params.set("refresh", "1");
+  $("#meta").textContent = "Memuat KPI dari Notion…";
+  const r = await fetch("/api/kpi?" + params);
+  if (r.status === 401) { $("#app").classList.add("hidden"); $("#login").classList.remove("hidden"); return; }
+  const d = await r.json();
+  if (!r.ok) { $("#login").classList.add("hidden"); $("#app").classList.remove("hidden"); $("#meta").textContent = "Gagal memuat KPI: " + (d.error || r.status); return; }
+  KPI = d;
+  $("#login").classList.add("hidden"); $("#app").classList.remove("hidden");
+  renderKpi();
+}
+
+function renderKpi() {
+  const d = KPI;
+  const shown = d.metrics.filter((m) => m.mode !== "hidden").sort((a, b) => (a.mode === "team") - (b.mode === "team"));
+  if (!shown.some((m) => m.id === KSEL)) KSEL = (shown.find((m) => m.mode === "shown" && m.fe?.tickets) || shown[0])?.id || null;
+  $("#qTitle").textContent = d.quarter;
+  $("#meta").textContent = "KPI live dari Notion, diambil " + new Date(d.generatedAt).toLocaleString("id-ID") + ". Mapping versi " + d.mapping.version + ".";
+  $("#kq").innerHTML = d.quarters.map((q) => `<option ${q === d.quarter ? "selected" : ""}>${esc(q)}</option>`).join("");
+  $("#kTitle").textContent = "KPI FE " + d.quarter;
+  $("#kStamp").textContent = d.uniqueTickets + " tiket";
+
+  $("#kWarn").innerHTML = d.warnings.map(esc).join("<br>");
+  $("#kWarn").classList.toggle("hidden", !d.warnings.length);
+
+  $("#kMinis").innerHTML = shown.map((m) => {
+    const fe = m.fe || {};
+    const tier3 = m.mode === "team"
+      ? `<span class="t3 team-note">Level tim saja</span>`
+      : `<span class="t3 people">${m.members.map((x) => `<span><b>${esc(x.name)}</b>${x.tickets}</span>`).join("")}</span>`;
+    return `<button class="mini" type="button" data-id="${m.id}" aria-pressed="${m.id === KSEL}">
+      <span class="t1"><span class="kind">${esc(m.kind || "")}</span><b>${esc(shortMetric(m.name))}</b>
+        <span class="dept">Target ${targetTxt(m)} · Actual ${pctTxt(m.actualDept)}</span></span>
+      <span class="t2">${m.mode === "team" ? esc(m.countLabel || "Tiket") + ": " : "FE: "}<b>${fe.tickets ?? 0}</b> tiket<br>
+        Deployed ${pctTxt(fe.deployedPct)} · Lolos QA ${pctTxt(fe.qaPct)}</span>
+      ${tier3}
+    </button>`;
+  }).join("");
+  $("#kMinis").querySelectorAll(".mini").forEach((b) => b.addEventListener("click", () => {
+    KSEL = b.dataset.id; KMEMBER = ""; renderKpi();
+    $("#kDetailTitle").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }));
+  const hidden = d.metrics.filter((m) => m.mode === "hidden");
+  $("#kHidden").innerHTML = hidden.length
+    ? `<p><b>Tidak diturunkan ke FE:</b> ${hidden.map((m) => `${esc(shortMetric(m.name))} <span class="sub">(${esc(m.modeReason || "")})</span>`).join("; ")}</p>` : "";
+
+  renderPyramid();
+  renderOutside();
+  renderKpiExplain();
+}
+
+function ticketRows(ids, metricId) {
+  const stageName = new Map((KPI.stages || []).map((s) => [s.n, s.name]));
+  if (!ids.length) return `<p class="sub empty">Tidak ada tiket.</p>`;
+  return `<table class="kt"><thead><tr><th>ID</th><th>Judul</th><th>Anggota</th><th class="num">Bobot</th><th>Tahap, status</th><th>Epic</th></tr></thead><tbody>` +
+    ids.map((id) => {
+      const t = KPI.tickets[id];
+      const src = metricId ? (t.metrics.find((x) => x.id === metricId) || {}).source : null;
+      const epics = t.epics.map((e) => esc(e.title || e.id.slice(0, 8))).join("; ");
+      return `<tr><td><a class="id" href="${esc(t.url)}" target="_blank" rel="noopener">${esc(id)}</a></td>
+        <td>${esc(t.title)}${SRC_LABEL[src] ? `<span class="tag tag--src">${SRC_LABEL[src]}</span>` : ""}${t.agent ? '<span class="tag">Agent FE</span>' : ""}</td>
+        <td data-label="Anggota">${t.members.length ? esc(t.members.join(", ")) : '<span class="tag">tanpa assignee FE</span>'}</td>
+        <td class="num" data-label="Bobot">${t.weight == null ? '<span class="tag">tanpa bobot</span>' : fmt(t.weight)}</td>
+        <td data-label="Tahap"><span><span class="sw" style="--c:${STAGE_COLOR(t.stage)}"></span>${esc(stageName.get(t.stage) || "")}, <span class="sub">${esc(t.status)}</span></span></td>
+        <td class="epic" data-label="Epic">${epics || '<span class="sub">tanpa epic</span>'}</td></tr>`;
+    }).join("") + "</tbody></table>";
+}
+
+function renderPyramid() {
+  const m = KPI.metrics.find((x) => x.id === KSEL);
+  if (!m) { $("#kPyramid").innerHTML = `<p class="sub">Belum ada metric untuk quarter ini.</p>`; $("#kDetailSub").textContent = ""; return; }
+  const fe = m.fe || {};
+  $("#kDetailTitle").textContent = shortMetric(m.name);
+  $("#kDetailSub").textContent = m.mode === "team"
+    ? "Diukur di level tim saja. " + (m.modeReason || "")
+    : "Departemen di puncak, lalu tim FE, anggota, dan tiket. Pilih anggota untuk menyaring tiket.";
+  const src = fe.bySource ? Object.entries(fe.bySource).filter(([, n]) => n).map(([k, n]) => `<span class="tag ${k !== "notion" ? "tag--src" : ""}">${n} ${k === "notion" ? "dari Notion" : SRC_LABEL[k]}</span>`).join("") : "";
+  const dept = `<div class="tier tier-1">
+      <span class="tier-name">Departemen</span>
+      <b class="tier-title">${esc(m.name)}</b>
+      <span class="sub">${esc(m.kind || "")} · ${m.epicCount} epic${m.url ? ` · <a href="${esc(m.url)}" target="_blank" rel="noopener">buka di Notion</a>` : ""}</span>
+      ${m.target != null && !m.targetUnit && m.target <= 100 ? meter(m.actualDept, "var(--st-6)", "Actual", m.target) + `<span class="sub">Target ${fmt(m.target)}%</span>` : `<span class="sub">Target ${targetTxt(m)} · Actual ${pctTxt(m.actualDept)}</span>`}
+    </div>`;
+  const team = `<div class="tier tier-2">
+      <span class="tier-name">Tim FE</span>
+      <div class="figs"><div><b>${fe.tickets ?? 0}</b><span>tiket</span></div><div><b>${fmt(fe.points ?? 0)}</b><span>poin</span></div></div>
+      ${meter(fe.deployedPct, "var(--st-7)", "Deployed")}${meter(fe.qaPct, "var(--st-5)", "Lolos QA")}
+      ${src ? `<div class="srcs">${src}</div>` : ""}
+      ${m.noAssignee?.length ? `<span class="sub">${m.noAssignee.length} tiket tanpa assignee FE</span>` : ""}
+    </div>`;
+  let people = "";
+  let ids = m.ticketIds || [];
+  if (m.mode !== "team") {
+    if (KMEMBER && !m.members.some((x) => x.name === KMEMBER)) KMEMBER = "";
+    people = `<div class="tier tier-3"><span class="tier-name">Anggota</span><div class="people-grid">` +
+      m.members.map((x, i) => `<button class="person" type="button" data-name="${esc(x.name)}" aria-pressed="${x.name === KMEMBER}">
+        <span class="who"><span class="sw" style="--c:${COLORS[i]}"></span>${esc(x.name)}</span>
+        <span class="figs"><span><b>${x.tickets}</b> tiket</span><span><b>${fmt(x.points)}</b> poin</span></span>
+        ${meter(x.deployedPct, "var(--st-7)", "Deployed")}${meter(x.qaPct, "var(--st-5)", "Lolos QA")}
+      </button>`).join("") + `</div></div>`;
+    if (KMEMBER) ids = m.members.find((x) => x.name === KMEMBER).ticketIds;
+  }
+  const tickets = `<div class="tier tier-4"><span class="tier-name">Tiket${KMEMBER ? " " + esc(KMEMBER) + ` <button class="linkish" type="button" id="kClear">tampilkan semua</button>` : ""} (${ids.length})</span>
+      <div class="scroll">${ticketRows(ids, m.mode === "team" ? null : m.id)}</div></div>`;
+  $("#kPyramid").innerHTML = dept + team + people + tickets;
+  $("#kPyramid").querySelectorAll(".person").forEach((b) => b.addEventListener("click", () => {
+    KMEMBER = KMEMBER === b.dataset.name ? "" : b.dataset.name; renderPyramid();
+  }));
+  $("#kClear")?.addEventListener("click", () => { KMEMBER = ""; renderPyramid(); });
+}
+
+function renderOutside() {
+  $("#kOutside").innerHTML = ticketRows(KPI.outside, null);
+  $("#hOutside").textContent = `Di luar KPI (${KPI.outside.length})`;
+}
+
+function renderKpiExplain() {
+  const d = KPI, mp = d.mapping;
+  const metricName = (id) => shortMetric(d.metrics.find((m) => m.id === id)?.name || id);
+  const epicTitle = new Map();
+  for (const t of Object.values(d.tickets)) for (const e of t.epics) if (e.title) epicTitle.set(e.id, e.title);
+  const audit = (e) => `<span class="sub">${esc(e.reason)} (${esc(e.by)}, ${esc(e.date)})</span>`;
+  const items = [
+    ...Object.entries(mp.metrics).map(([id, e]) => `<li><b>${esc(metricName(id))}</b>: ${e.fe === "hidden" ? "disembunyikan" : e.fe === "team" ? "level tim saja" : "ditampilkan"}. ${audit(e)}</li>`),
+    ...mp.extraEpics.map((e) => `<li>Epic <b>${esc(epicTitle.get(e.epic) || e.epic)}</b> → ${esc(metricName(e.metric))}. ${audit(e)}</li>`),
+    ...mp.excludeEpics.map((e) => `<li>Epic <b>${esc(epicTitle.get(e.epic) || e.epic)}</b> dikeluarkan dari ${esc(metricName(e.metric))}. ${audit(e)}</li>`),
+    ...mp.rules.map((r) => `<li>Rule: ${Object.entries(r.when).map(([k, v]) => `<code>${esc(k)} = ${esc(v)}</code>`).join(" dan ")} → ${esc(metricName(r.metric))}. ${audit(r)}</li>`),
+  ];
+  $("#kExplain").innerHTML = `
+    <div><h3>Cara membaca piramid</h3><ul>
+      <li><b>Puncak</b>: metric departemen apa adanya dari 2026 ProdDev Metrics, termasuk Target dan Actual %. Aplikasi ini tidak pernah mengubah data Notion.</li>
+      <li><b>Tim FE</b>: tiket FE quarter ini yang masuk metric itu. Persentase dihitung per jumlah tiket, seperti rollup departemen. Poin adalah jumlah Weight.</li>
+      <li><b>Deployed</b> = tiket berstatus Deployed, sama dengan definisi selesai departemen. <b>Lolos QA</b> = tahap 5 ke atas (Ready for project sampai Deployed), progres dari sisi developer.</li>
+      <li><b>Anggota</b>: kredit ke Assignee. Tiket dengan beberapa assignee FE dihitung penuh untuk jumlah tiket tiap orang, sedangkan poinnya dibagi rata.</li>
+      <li>Angka antar piramid <b>tidak dijumlahkan</b>, karena satu tiket bisa masuk lebih dari satu metric. Total tiket unik ada di cap pojok kanan atas.</li>
+      <li>Tiket masuk metric lewat: epic di Notion, lalu <span class="tag tag--src">mapping FE</span>, lalu <span class="tag tag--src">rule</span>. Sisanya masuk <b>Di luar KPI</b>.</li>
+    </ul></div>
+    <div><h3>Mapping FE yang aktif</h3>
+      <ul>${items.join("") || "<li>Tidak ada.</li>"}</ul>
+      <p class="sub">Mapping disimpan di repo dashboard (<code>api/_mapping.json</code>). Perubahannya lewat PR yang di-approve FE lead.</p></div>`;
+}
+
+function setView(v) {
+  VIEW = v;
+  history.replaceState(null, "", v === "kpi" ? "#kpi" : location.pathname + location.search);
+  $("#tabRekap").setAttribute("aria-selected", String(v === "rekap"));
+  $("#tabKpi").setAttribute("aria-selected", String(v === "kpi"));
+  $("#viewRekap").classList.toggle("hidden", v !== "rekap");
+  $("#viewKpi").classList.toggle("hidden", v !== "kpi");
+  document.querySelectorAll(".rekap-only").forEach((el) => el.classList.toggle("hidden", v !== "rekap"));
+  document.querySelectorAll(".kpi-only").forEach((el) => el.classList.toggle("hidden", v !== "kpi"));
+  if (v === "kpi") { if (KPI) renderKpi(); else loadKpi(); }
+  else { if (DATA) render(); else load(); }
+}
+const boot = () => setView(VIEW);
+$("#tabRekap").addEventListener("click", () => setView("rekap"));
+$("#tabKpi").addEventListener("click", () => setView("kpi"));
+$("#kq").addEventListener("change", () => { KSEL = null; KMEMBER = ""; loadKpi(); });
+document.querySelector(".tabs").addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  const next = VIEW === "kpi" ? "rekap" : "kpi";
+  setView(next); $(next === "kpi" ? "#tabKpi" : "#tabRekap").focus();
+});
+
 $("#loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   $("#loginErr").textContent = "";
   const r = await fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: $("#pw").value }) });
-  if (r.ok) { $("#pw").value = ""; load(); } else { $("#loginErr").textContent = (await r.json().catch(() => ({}))).error || "Gagal masuk"; }
+  if (r.ok) { $("#pw").value = ""; boot(); } else { $("#loginErr").textContent = (await r.json().catch(() => ({}))).error || "Gagal masuk"; }
 });
 $("#q").addEventListener("change", (e) => load({ q: e.target.value }));
 $("#mode").addEventListener("change", (e) => {
@@ -402,13 +626,13 @@ $("#mode").addEventListener("change", (e) => {
 });
 ["#sFrom", "#sTo"].forEach((id) => $(id).addEventListener("change", () => load({ from: $("#sFrom").value, to: $("#sTo").value })));
 $("#crit").addEventListener("change", (e) => { CRIT = e.target.value; try { localStorage.setItem("fe-dash-crit", CRIT); } catch {} render(); });
-$("#refresh").addEventListener("click", () => load(null, true));
+$("#refresh").addEventListener("click", () => (VIEW === "kpi" ? loadKpi(true) : load(null, true)));
 $("#logout").addEventListener("click", async () => { await fetch("/api/logout", { method: "POST" }); location.reload(); });
 ["#fMember", "#fAgent", "#fStage"].forEach((s) => $(s).addEventListener("change", renderTickets));
 $("#fText").addEventListener("input", renderTickets);
 let rz;
-window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => DATA && render(), 150); });
-load();
+window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => VIEW === "rekap" && DATA && render(), 150); });
+boot();
 </script>
 </body>
 </html>

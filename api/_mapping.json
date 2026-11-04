@@ -12,10 +12,15 @@
         },
         "3f7c6dc1a8eb80e499e1c8ecb8f9adef": {
           "fe": "team",
-          "count": { "titleRegex": "hot[\\s-]?fix", "flags": "i", "label": "Tiket hotfix FE (proxy insiden)" },
+          "count": {
+            "titleRegex": "hot[\\s-]?fix",
+            "flags": "i",
+            "label": "Tiket hotfix FE (proxy insiden)"
+          },
           "reason": "Customer Impacting Incident: diukur di level tim saja, dengan jumlah tiket hotfix FE sebagai proxy. Tidak diturunkan ke anggota.",
           "by": "Koyo",
-          "date": "2026-11-04"
+          "date": "2026-11-04",
+          "targetUnit": "insiden (maksimal)"
         }
       },
       "extraEpics": [
@@ -37,7 +42,10 @@
       "excludeEpics": [],
       "rules": [
         {
-          "when": { "issueType": "Bug", "hasEpic": false },
+          "when": {
+            "issueType": "Bug",
+            "hasEpic": false
+          },
           "metric": "2b1c6dc1a8eb81f9b201c123d7125bec",
           "reason": "Bug FE tanpa epic dihitung ke Bug Metrics",
           "by": "Koyo",

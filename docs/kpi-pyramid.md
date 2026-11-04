@@ -189,3 +189,12 @@ Hanya mode per quarter. Mode rentang sprint tidak dipakai di sini, karena metric
 - `api/_lib.js`: ekspor helper Notion, tiket ditambah `pageId`/`epicIds`/`epicPropId`/`epicHasMore`. Output rekap lain tidak berubah.
 - `npm test`: 11 uji lulus. Termasuk fixture data nyata 2026-11-04 (92 tiket). Tanpa mapping: 45/16/12/0, di luar 19. Dengan mapping: Platform 49 (45 notion + 4 mapping), Committed 17, Bug 23 (16 + 7 rule), di luar 3.
 - Belum diverifikasi ke Notion live: butuh akses integration ke ProdDev Metrics dan Epic Tracker, plus deploy ber-env.
+
+## 14. Status fase 2 (2026-11-04)
+
+- Tab **Rekap | KPI** di header (`#kpi` di URL membuka tab KPI). Kontrol periode/kriteria rekap disembunyikan di tab KPI; tab KPI punya pemilih quarter sendiri.
+- Lembar KPI: piramid mini per metric (departemen → FE → anggota), metric `team` di urutan terakhir, metric `hidden` tercantum dengan alasan.
+- Rincian: 4 tingkat (departemen dengan meter Actual vs Target, tim FE dengan Deployed/Lolos QA dan sumber tiket, kartu anggota yang bisa dipilih untuk menyaring tiket, daftar tiket dengan badge mapping/rule). Garis penghubung antar tingkat memakai CSS, bukan SVG.
+- Panel **Di luar KPI** dan penjelasan + daftar mapping aktif (alasan, pembuat, tanggal).
+- Mobile (≤40rem): tingkat piramid ditumpuk penuh lebar, tabel tiket jadi kartu bertumpuk. Tanpa scroll horizontal (dicek di Brave 375px dan 1366px, tanpa error JS).
+- `targetUnit` opsional di `metrics.<id>` untuk target yang bukan persen (Incident: "insiden (maksimal)").
