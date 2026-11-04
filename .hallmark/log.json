@@ -1,0 +1,22 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "app",
+  "shape": "app screen",
+  "theme": "coral",
+  "axes": "light/grotesk-sans/warm",
+  "nav": "top bar on desk",
+  "signature": "quarter statement sheet with pressed criterion",
+  "sections": [
+   "statement",
+   "sprint",
+   "pipeline",
+   "tickets",
+   "explain"
+  ],
+  "waived": [],
+  "prompt": "FE quarter completion dashboard",
+  "date": "2026-11-03"
+ }
+]

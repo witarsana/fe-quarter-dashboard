@@ -1,0 +1,6 @@
+.env*
+.vercel
+.gitignore
+*.md
+.hallmark
+docs

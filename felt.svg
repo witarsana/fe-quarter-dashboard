@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <filter id="c" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="cloud"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.92" numOctaves="1" seed="3" result="grain"/>
+    <feBlend in="cloud" in2="grain" mode="multiply" result="mix"/>
+    <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.36  0 0 0 0 0.30  0 0 0 0.11 0"/>
+  </filter>
+  <rect width="360" height="360" filter="url(#c)"/>
+  <g stroke="rgb(120,100,85)" stroke-opacity="0.06" stroke-width="0.6" fill="none">
+    <path d="M20 40c6 2 10 1 14-1"/><path d="M210 90c5 3 9 3 13 1"/><path d="M95 210c4-2 9-2 12 0"/>
+    <path d="M300 260c5 1 8 4 10 7"/><path d="M150 320c6 0 10-2 13-5"/><path d="M60 150c3 3 7 4 11 3"/>
+  </g>
+</svg>

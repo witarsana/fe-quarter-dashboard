@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>FE Quarter Report</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-0: #f4f4f2;
+    --surface-1: #fcfcfb;
+    --border: #e2e1dc;
+    --grid: #ecebe7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #7a7974;
+    --accent: #2a78d6;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --series-3: #1baf7a;
+    --warn-bg: #fff4d6;
+    --warn-ink: #6b4a00;
+    --st-0: #b9b8b1; --st-1: #86b6ef; --st-2: #6da7ec; --st-3: #5598e7; --st-4: #3987e5; --st-5: #256abf; --st-6: #184f95; --st-7: #0d366b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-0: #121211;
+      --surface-1: #1a1a19;
+      --border: #2e2e2c;
+      --grid: #262624;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --text-muted: #8f8e86;
+      --accent: #3987e5;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      --series-3: #199e70;
+      --warn-bg: #3a2e10;
+      --warn-ink: #f2d38a;
+      --st-0: #55554f; --st-1: #184f95; --st-2: #1c5cab; --st-3: #256abf; --st-4: #2a78d6; --st-5: #5598e7; --st-6: #86b6ef; --st-7: #b7d3f6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--surface-0); color: var(--text-primary);
+    font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  h1 { font-size: 20px; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 15px; margin: 0 0 12px; }
+  .sub { color: var(--text-secondary); font-size: 13px; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  select, input, button {
+    font: inherit; color: var(--text-primary); background: var(--surface-1);
+    border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px;
+  }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .kpi .label { color: var(--text-secondary); font-size: 12px; }
+  .kpi .value { font-size: 26px; font-weight: 650; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .kpi .hint { color: var(--text-muted); font-size: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 900px) { .grid2 { grid-template-columns: 2fr 3fr; align-items: start; } }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; color: var(--text-secondary); font-size: 12px; }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+  .grid2 > * { min-width: 0; }
+  #barChart svg, #sprintChart svg { display: block; max-width: 100%; height: auto; }
+  svg text { fill: var(--text-secondary); font-size: 12px; }
+  svg .val { fill: var(--text-primary); font-weight: 600; }
+  svg .gridline { stroke: var(--grid); }
+  .mark { transition: opacity .12s; }
+  svg:hover .mark:not(:hover) { opacity: .55; }
+  .tip {
+    position: fixed; pointer-events: none; z-index: 10; background: var(--surface-1); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; max-width: 260px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { color: var(--text-secondary); font-weight: 600; font-size: 12px; position: sticky; top: 0; background: var(--surface-1); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .scroll { max-height: 520px; overflow: auto; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-secondary); margin-left: 4px; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c); margin-right: 6px; }
+  .warn { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 13px; }
+  .warn ul { margin: 6px 0 0; padding-left: 18px; }
+  .login { max-width: 340px; margin: 12vh auto; }
+  .login form { display: grid; gap: 10px; }
+  .err { color: #c0362c; font-size: 13px; min-height: 18px; }
+  .foot { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .hidden { display: none !important; }
+  #explainBody h3 { font-size: 13px; margin: 14px 0 6px; }
+  #explainBody ul { margin: 0; padding-left: 18px; }
+  #explainBody li { margin: 3px 0; color: var(--text-secondary); }
+  #explainBody li b { color: var(--text-primary); }
+  .active-crit { background: var(--warn-bg); border-radius: 6px; padding: 1px 6px; }
+</style>
+</head>
+<body>
+<main>
+  <section id="login" class="login hidden card">
+    <h1>FE Quarter Report</h1>
+    <p class="sub">Masukkan password dashboard.</p>
+    <form id="loginForm">
+      <input id="pw" type="password" autocomplete="current-password" placeholder="Password" required>
+      <button class="primary" type="submit">Masuk</button>
+      <div class="err" id="loginErr"></div>
+    </form>
+  </section>
+
+  <section id="app" class="hidden">
+    <header>
+      <div>
+        <h1>FE Completion — <span id="qTitle"></span></h1>
+        <div class="sub" id="meta"></div>
+      </div>
+      <div class="controls">
+        <label class="sub" for="mode">Periode</label>
+        <select id="mode"><option value="q">Per quarter</option><option value="range">Rentang sprint</option></select>
+        <select id="q" aria-label="Quarter"></select>
+        <span id="rangeBox" class="hidden" style="display:inline-flex;gap:6px;align-items:center">
+          <select id="sFrom" aria-label="Dari sprint"></select>
+          <span class="sub">s/d</span>
+          <select id="sTo" aria-label="Sampai sprint"></select>
+        </span>
+        <label class="sub" for="crit">Dihitung</label>
+        <select id="crit"></select>
+        <button id="refresh" title="Ambil ulang dari Notion">Refresh</button>
+        <button id="logout">Keluar</button>
+      </div>
+    </header>
+
+    <div id="warn" class="warn hidden"></div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid2">
+      <div class="card">
+        <h2>Bobot selesai per anggota</h2>
+        <div id="barChart"></div>
+      </div>
+      <div class="card">
+        <h2>Bobot per sprint</h2>
+        <div class="legend" id="legend"></div>
+        <div id="sprintChart"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Ringkasan anggota</h2>
+      <table id="memberTable"></table>
+    </div>
+
+    <div class="card">
+      <h2>Pipeline per tahap (bobot, semua status)</h2>
+      <div class="legend" id="stageLegend"></div>
+      <div id="pipeChart"></div>
+      <p class="foot">Garis putus-putus = batas kriteria yang dipilih; tahap di kanannya yang dihitung.</p>
+    </div>
+
+    <div class="card">
+      <h2>Tiket</h2>
+      <div class="filters">
+        <select id="fMember"><option value="">Semua anggota</option></select>
+        <select id="fStage"><option value="">Semua tahap</option></select>
+        <select id="fAgent"><option value="">Semua builder</option><option value="agent">Agent FE</option><option value="human">Engineer</option></select>
+        <input id="fText" type="search" placeholder="Cari ID / judul">
+      </div>
+      <div class="scroll"><table id="ticketTable"></table></div>
+    </div>
+
+    <div class="card" id="explain">
+      <h2>Cara membaca &amp; arti filter</h2>
+      <div id="explainBody"></div>
+    </div>
+  </section>
+  <div class="tip" id="tip"></div>
+</main>
+
+<script>
+const COLORS = ["var(--series-1)", "var(--series-2)", "var(--series-3)"];
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = (n) => (Math.round(n * 10) / 10).toLocaleString("id-ID");
+let DATA = null;
+let CRIT = (() => { try { const c = localStorage.getItem("fe-dash-crit") || ""; return c === "all" ? "assigned" : c; } catch { return ""; } })();
+const STAGE_COLOR = (n) => `var(--st-${n})`;
+
+// Apply the chosen criterion (minimum stage) to the raw ticket list → per-member aggregates.
+function compute() {
+  const d = DATA;
+  const crit = d.criteria.find((c) => c.key === CRIT) || d.criteria.find((c) => c.key === d.defaultCriteria);
+  const members = d.team.map((m) => ({ ...m, points: 0, tickets: 0, agent: 0, unweighted: 0, stages: d.stages.map(() => 0) }));
+  const sPos = new Map(d.stages.map((s, i) => [s.n, i]));
+  const idx = new Map(members.map((m, i) => [m.name, i]));
+  const sprints = d.sprints.map((s) => ({ ...s, points: members.map(() => 0) }));
+  const sIdx = new Map(sprints.map((s, i) => [s.id, i]));
+  const counted = [], unweighted = [], noFe = [];
+  for (const t of d.tickets) {
+    const share = (t.weight || 0) / Math.max(1, t.members.length);
+    for (const name of t.members) members[idx.get(name)].stages[sPos.get(t.stage)] += share;
+    if (t.stage < crit.min) continue;
+    if (!t.members.length) { noFe.push(t); continue; }
+    if (t.weight == null) unweighted.push(t);
+    counted.push({ ...t, share, split: t.members.length > 1 });
+    for (const name of t.members) {
+      const m = members[idx.get(name)];
+      m.points += share; m.tickets += 1; m.agent += t.agent ? 1 : 0; m.unweighted += t.weight == null ? 1 : 0;
+      const si = sIdx.get(t.sprintId);
+      if (si != null) sprints[si].points[idx.get(name)] += share;
+    }
+  }
+  return { crit, members, sprints, counted, unweighted, noFe };
+}
+
+const tip = $("#tip");
+function showTip(e, html) { tip.innerHTML = html; tip.style.display = "block"; moveTip(e); }
+function moveTip(e) {
+  const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+  const y = Math.min(e.clientY + 14, window.innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+function bindTips(root) {
+  root.querySelectorAll("[data-tip]").forEach((el) => {
+    el.addEventListener("mouseenter", (e) => showTip(e, el.dataset.tip));
+    el.addEventListener("mousemove", moveTip);
+    el.addEventListener("mouseleave", hideTip);
+  });
+}
+
+// period: { q } or { from, to } (sprint ids)
+let PERIOD = (() => { try { return JSON.parse(localStorage.getItem("fe-dash-period") || "null") || {}; } catch { return {}; } })();
+async function load(period, refresh) {
+  if (period) PERIOD = period;
+  try { localStorage.setItem("fe-dash-period", JSON.stringify(PERIOD)); } catch {}
+  const params = new URLSearchParams();
+  if (PERIOD.from && PERIOD.to) { params.set("from", PERIOD.from); params.set("to", PERIOD.to); }
+  else if (PERIOD.q) params.set("q", PERIOD.q);
+  if (refresh) params.set("refresh", "1");
+  $("#meta").textContent = "Memuat dari Notion…";
+  const r = await fetch("/api/report?" + params);
+  if (r.status === 401) { $("#app").classList.add("hidden"); $("#login").classList.remove("hidden"); return; }
+  const d = await r.json();
+  if (!r.ok) {
+    if (r.status === 502 && PERIOD.from) { PERIOD = {}; return load(); } // stale saved range → default quarter
+    $("#meta").textContent = "Gagal: " + (d.error || r.status); return;
+  }
+  DATA = d;
+  $("#login").classList.add("hidden"); $("#app").classList.remove("hidden");
+  render();
+}
+
+function render() {
+  const d = DATA;
+  if (!d.criteria.some((c) => c.key === CRIT)) CRIT = d.defaultCriteria;
+  const v = compute();
+  $("#qTitle").textContent = d.periodLabel;
+  $("#meta").textContent = "Data live dari Notion · diambil " + new Date(d.generatedAt).toLocaleString("id-ID") + " · kriteria: " + v.crit.label;
+  const qs = d.quarters.includes(d.quarter) ? d.quarters : [...d.quarters, d.quarter].sort();
+  $("#q").innerHTML = qs.map((q) => `<option ${q === d.quarter ? "selected" : ""}>${esc(q)}</option>`).join("");
+  const isRange = !!d.range;
+  $("#mode").value = isRange ? "range" : "q";
+  $("#q").classList.toggle("hidden", isRange);
+  $("#rangeBox").classList.toggle("hidden", !isRange);
+  const opt = (sel) => d.allSprints.map((sp) => `<option value="${sp.id}" ${sp.id === sel ? "selected" : ""}>${esc(sp.name)} (${esc(sp.start.slice(5))})</option>`).join("");
+  const first = d.sprints[0]?.id, last = d.sprints[d.sprints.length - 1]?.id;
+  $("#sFrom").innerHTML = opt(isRange ? d.range.from : first);
+  $("#sTo").innerHTML = opt(isRange ? d.range.to : last);
+  $("#crit").innerHTML = d.criteria.map((c) => `<option value="${c.key}" ${c.key === v.crit.key ? "selected" : ""}>${esc(c.label)}</option>`).join("");
+
+  const total = v.members.reduce((s, m) => s + m.points, 0);
+  const nAgent = v.counted.filter((t) => t.agent).length;
+  $("#kpis").innerHTML = [
+    ["Total bobot", fmt(total), v.crit.label],
+    ["Tiket dihitung", v.counted.length, "dari " + d.tickets.length + " tiket FE di sprint periode ini"],
+    ["Dikerjakan Agent FE", v.counted.length ? Math.round((nAgent / v.counted.length) * 100) + "%" : "0%", nAgent + " tiket"],
+    ["Tanpa bobot", v.unweighted.length, v.unweighted.length ? "dihitung 0 — isi Weight" : "semua sudah berbobot"],
+  ].map(([l, val, h]) => `<div class="kpi"><div class="label">${l}</div><div class="value">${esc(val)}</div><div class="hint">${esc(h)}</div></div>`).join("");
+
+  const w = [];
+  if (v.unweighted.length) w.push(`<b>${v.unweighted.length} tiket belum punya Weight</b> (dihitung 0). Minta FE lead menentukan bobotnya:<ul>` +
+    v.unweighted.slice(0, 8).map((t) => `<li><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.id)}</a> — ${esc(t.title)} (${esc(t.members.join(", "))})</li>`).join("") +
+    (v.unweighted.length > 8 ? `<li>… dan ${v.unweighted.length - 8} lagi (lihat tabel tiket)</li>` : "") + "</ul>");
+  if (v.noFe.length) w.push(`${v.noFe.length} tiket FE tanpa assignee anggota FE — tidak dikreditkan: ` +
+    v.noFe.slice(0, 6).map((t) => `<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.id)}</a>`).join(", "));
+  if (d.otherTeam?.length) w.push(`Catatan: ${d.otherTeam.length} tiket anggota FE dengan Team bukan Front-end — tidak dihitung: ` +
+    d.otherTeam.map((t) => `<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.id)}</a> (${esc(t.team)}, ${esc(t.status)}, ${esc(t.members.join(", "))})`).join(", "));
+  if (d.unknownStatuses.length) w.push("Status belum dipetakan ke tahap (tidak dihitung): " + esc(d.unknownStatuses.join(", ")));
+  $("#warn").innerHTML = w.join("<br>");
+  $("#warn").classList.toggle("hidden", !w.length);
+
+  renderBars(v);
+  renderSprints(v);
+  renderMemberTable(v, total);
+  renderPipeline(v);
+  const fm = $("#fMember"), keepM = fm.value;
+  fm.innerHTML = `<option value="">Semua anggota</option>` + d.team.map((m) => `<option ${m.name === keepM ? "selected" : ""}>${esc(m.name)}</option>`).join("");
+  const fs = $("#fStage"), keepS = fs.value;
+  fs.innerHTML = `<option value="">Semua tahap</option>` + d.stages.filter((s) => s.n >= v.crit.min).map((s) => `<option value="${s.n}" ${String(s.n) === keepS ? "selected" : ""}>${esc(s.name)}</option>`).join("");
+  renderTickets();
+  renderExplain(v);
+}
+
+function renderBars(d) {  // d = computed view
+  const W = Math.max(300, $("#barChart").clientWidth || 420), rowH = 44, padL = 70, padR = 56, H = d.members.length * rowH + 8;
+  const max = Math.max(1, ...d.members.map((m) => m.points));
+  const rows = d.members.map((m, i) => {
+    const y = i * rowH + 8, bw = ((W - padL - padR) * m.points) / max;
+    const tipHtml = `<b>${esc(m.full)}</b><br>Bobot: ${fmt(m.points)}<br>Tiket: ${m.tickets}<br>Agent FE: ${m.agent}`;
+    return `<g class="mark" data-tip="${esc(tipHtml)}">
+      <rect x="0" y="${y}" width="${W}" height="${rowH - 6}" fill="transparent"/>
+      <text x="${padL - 10}" y="${y + rowH / 2}" text-anchor="end">${esc(m.name)}</text>
+      <rect x="${padL}" y="${y + 8}" width="${Math.max(bw, m.points ? 4 : 0)}" height="${rowH - 22}" rx="4" fill="${COLORS[i]}"/>
+      <text class="val" x="${padL + bw + 8}" y="${y + rowH / 2}">${fmt(m.points)}</text>
+    </g>`;
+  }).join("");
+  $("#barChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Bobot per anggota">${rows}</svg>`;
+  bindTips($("#barChart"));
+}
+
+function renderSprints(d) {  // d = computed view
+  $("#legend").innerHTML = d.members.map((m, i) => `<span style="--c:${COLORS[i]}">${esc(m.name)}</span>`).join("");
+  const sp = d.sprints;
+  if (!sp.length) { $("#sprintChart").innerHTML = `<p class="sub">Belum ada sprint di periode ini.</p>`; return; }
+  const W = Math.max(300, $("#sprintChart").clientWidth || 560), H = 240, padL = 34, padB = 46, padT = 18;
+  const totals = sp.map((s) => s.points.reduce((a, b) => a + b, 0));
+  const max = Math.max(1, ...totals);
+  const step = niceStep(max);
+  const top = Math.ceil(max / step) * step;
+  const plotH = H - padB - padT, slot = (W - padL) / sp.length, bw = Math.min(44, slot * 0.6);
+  const yOf = (v) => padT + plotH - (plotH * v) / top;
+  let g = "";
+  for (let v = 0; v <= top; v += step) g += `<line class="gridline" x1="${padL}" x2="${W}" y1="${yOf(v)}" y2="${yOf(v)}"/><text x="${padL - 6}" y="${yOf(v) + 4}" text-anchor="end">${v}</text>`;
+  sp.forEach((s, k) => {
+    const x = padL + slot * k + (slot - bw) / 2;
+    let acc = 0;
+    s.points.forEach((p, i) => {
+      if (!p) return;
+      const y1 = yOf(acc + p), y0 = yOf(acc);
+      const tipHtml = `<b>${esc(s.name)}</b><br>${esc(d.members[i].name)}: ${fmt(p)}<br><span style="opacity:.75">${esc(s.start)} → ${esc(s.end)}</span>`;
+      g += `<rect class="mark" data-tip="${esc(tipHtml)}" x="${x}" y="${y1 + 1}" width="${bw}" height="${Math.max(y0 - y1 - 2, 1)}" rx="3" fill="${COLORS[i]}"/>`;
+      acc += p;
+    });
+    if (totals[k]) g += `<text class="val" x="${x + bw / 2}" y="${yOf(totals[k]) - 6}" text-anchor="middle">${fmt(totals[k])}</text>`;
+    const label = String(s.name).replace(/^.*?(sprint\s*\S+).*$/i, "$1");
+    g += `<text x="${x + bw / 2}" y="${H - padB + 16}" text-anchor="middle">${esc(label.slice(0, 14))}</text>`;
+    g += `<text x="${x + bw / 2}" y="${H - padB + 30}" text-anchor="middle" style="font-size:11px">${esc(s.start.slice(5))}</text>`;
+  });
+  $("#sprintChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Bobot per sprint per anggota">${g}</svg>`;
+  bindTips($("#sprintChart"));
+}
+function niceStep(max) {
+  const raw = max / 4, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  return [1, 2, 5, 10].map((m) => m * p).find((s) => s >= raw) || p * 10;
+}
+
+function renderMemberTable(v, total) {
+  $("#memberTable").innerHTML = `<thead><tr><th>Anggota</th><th class="num">Tiket</th><th class="num">Bobot</th><th class="num">% tim</th><th class="num">Agent FE</th><th class="num">Tanpa bobot</th></tr></thead><tbody>` +
+    v.members.map((m, i) => `<tr><td><span class="dot" style="--c:${COLORS[i]}"></span>${esc(m.full)}</td><td class="num">${m.tickets}</td><td class="num"><b>${fmt(m.points)}</b></td><td class="num">${total ? Math.round((m.points / total) * 100) : 0}%</td><td class="num">${m.agent}</td><td class="num">${m.unweighted}</td></tr>`).join("") +
+    `<tr><td><b>Total</b></td><td class="num">${v.counted.length}</td><td class="num"><b>${fmt(total)}</b></td><td class="num">100%</td><td class="num">${v.counted.filter((t) => t.agent).length}</td><td class="num">${v.unweighted.length}</td></tr></tbody>`;
+}
+
+function renderPipeline(v) {
+  const st = DATA.stages;
+  $("#stageLegend").innerHTML = st.map((s) => `<span style="--c:${STAGE_COLOR(s.n)}">${esc(s.name)}</span>`).join("");
+  const W = Math.max(300, $("#pipeChart").clientWidth || 700), rowH = 46, padL = 64, padR = 50, H = v.members.length * rowH + 22;
+  const max = Math.max(1, ...v.members.map((m) => m.stages.reduce((a, b) => a + b, 0)));
+  const plotW = W - padL - padR;
+  let g = "";
+  v.members.forEach((m, i) => {
+    const y = i * rowH + 6;
+    g += `<text x="${padL - 10}" y="${y + rowH / 2 - 2}" text-anchor="end">${esc(m.name)}</text>`;
+    let acc = 0, critX = null;
+    m.stages.forEach((p, k) => {
+      const n = st[k].n;
+      if (n === v.crit.min) critX = padL + (plotW * acc) / max;
+      if (!p) return;
+      const x = padL + (plotW * acc) / max, w = (plotW * p) / max;
+      const tipHtml = `<b>${esc(m.full)}</b><br>${esc(st[k].name)}: ${fmt(p)}<br><span style="opacity:.75">${esc(st[k].statuses.join(", "))}</span>`;
+      g += `<rect class="mark" data-tip="${esc(tipHtml)}" x="${x + 1}" y="${y + 8}" width="${Math.max(w - 2, 1)}" height="${rowH - 22}" rx="3" fill="${STAGE_COLOR(n)}"/>`;
+      acc += p;
+    });
+    if (critX == null) critX = padL + (plotW * acc) / max;
+    g += `<line x1="${critX}" x2="${critX}" y1="${y + 2}" y2="${y + rowH - 8}" stroke="var(--text-primary)" stroke-width="2" stroke-dasharray="3 3"/>`;
+    g += `<text class="val" x="${padL + (plotW * acc) / max + 8}" y="${y + rowH / 2 - 2}">${fmt(acc)}</text>`;
+  });
+  $("#pipeChart").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Pipeline bobot per tahap per anggota">${g}</svg>`;
+  bindTips($("#pipeChart"));
+}
+
+function renderExplain(v) {
+  const d = DATA;
+  const critDesc = {
+    assigned: "Semua tiket FE di sprint periode ini yang di-assign ke anggota, termasuk yang belum dimulai (Not started). Menggambarkan total komitmen/beban kerja.",
+    progress: "Tiket yang sudah mulai dikerjakan (In progress, Blocked, gagal tes lalu dikerjakan ulang) sampai Deployed. Not started tidak dihitung.",
+    review: "Tiket yang PR-nya sudah sampai Code review atau lebih jauh. Kerja yang masih bisa di-bounce reviewer ikut terhitung.",
+    qa: "Tiket yang sudah lolos QA di dev (Ready for project) sampai Deployed. Default — dianggap 'selesai' dari sisi engineer.",
+    deployed: "Hanya tiket yang sudah rilis ke production (Deployed).",
+  };
+  $("#explainBody").innerHTML = `
+    <h3>Kriteria "Dihitung"</h3>
+    <ul>${d.criteria.map((c) => `<li><span class="${c.key === v.crit.key ? "active-crit" : ""}"><b>${esc(c.label)}</b></span> — ${esc(critDesc[c.key] || "")} <span class="sub">(tahap ≥ ${c.min})</span></li>`).join("")}</ul>
+    <h3>Tahap (urutan status di pipeline)</h3>
+    <ul>${d.stages.map((s) => `<li><span class="dot" style="--c:${STAGE_COLOR(s.n)}"></span><b>${s.n}. ${esc(s.name)}</b> — ${esc(s.statuses.join(", "))}</li>`).join("")}</ul>
+    <h3>Periode</h3>
+    <ul>
+      <li><b>Per quarter</b> — sprint dengan tag <code>[YYQn]</code> di namanya (mis. <code>[26Q4] Sprint 20</code> mulai 29 Sep tetapi masuk Q4). Sprint tanpa tag memakai quarter dari tanggal mulainya.</li>
+      <li><b>Rentang sprint</b> — dari sprint pertama sampai sprint terakhir yang dipilih (inklusif, urut tanggal mulai), boleh lintas quarter.</li>
+      <li><b>Carry-over</b> — tiket yang ada di beberapa sprint dihitung sekali, di sprint TERAKHIR-nya. Kalau sprint terakhirnya di luar periode, tiket tidak dihitung di periode ini.</li>
+    </ul>
+    <h3>Aturan hitung</h3>
+    <ul>
+      <li><b>Bobot</b> = property <code>Weight</code> (1/2/3/5/8/13). Tanpa Weight → dihitung 0 dan muncul di peringatan; FE lead (Hermes) bisa memperkirakan bobotnya.</li>
+      <li><b>Kredit</b> ke <code>Assignee</code>, termasuk tiket yang dikerjakan Agent FE (ditandai terpisah). Lebih dari satu anggota FE → bobot dibagi rata.</li>
+      <li><b>Tidak pernah dihitung</b>: ${esc(d.never.join(", "))} (${d.closed} tiket di periode ini) — ditutup tanpa hasil.</li>
+      <li>Tiket FE tanpa assignee anggota FE tidak dikreditkan ke siapa pun (muncul di peringatan & tabel). Assignee campuran (FE + non-FE) → bobot dibagi antar anggota FE saja.</li>
+      <li><b>Hanya Team = Front-end</b> — tiket anggota FE dengan Team lain tidak dihitung, hanya dicatat di peringatan.</li>
+      <li><b>Pipeline per tahap</b> selalu menampilkan semua tahap; garis putus-putus menandai batas kriteria terpilih.</li>
+    </ul>`;
+}
+
+function renderTickets() {
+  if (!DATA) return;
+  const v = compute();
+  const fm = $("#fMember").value, fa = $("#fAgent").value, fs = $("#fStage").value, ft = $("#fText").value.trim().toLowerCase();
+  const stageName = new Map(DATA.stages.map((s) => [s.n, s.name]));
+  const rows = [...v.counted, ...v.noFe.map((t) => ({ ...t, share: 0, split: false }))].filter((t) =>
+    (!fm || t.members.includes(fm)) &&
+    (!fs || String(t.stage) === fs) &&
+    (!fa || (fa === "agent" ? t.agent : !t.agent)) &&
+    (!ft || (t.id + " " + t.title).toLowerCase().includes(ft)));
+  $("#ticketTable").innerHTML = `<thead><tr><th>ID</th><th>Judul</th><th>Anggota</th><th class="num">Bobot</th><th>Tahap · status</th><th>Sprint</th></tr></thead><tbody>` +
+    rows.map((t) => `<tr>
+      <td><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.id)}</a></td>
+      <td>${esc(t.title)}${t.agent ? '<span class="tag">Agent FE</span>' : ""}${t.split ? '<span class="tag">dibagi</span>' : ""}</td>
+      <td>${t.members.length ? esc(t.members.join(", ")) : '<span class="tag">tanpa assignee FE</span>'}</td>
+      <td class="num">${t.weight == null ? '<span class="tag">tanpa bobot</span>' : fmt(t.weight) + (t.split ? ` <span class="sub">(${fmt(t.share)}/orang)</span>` : "")}</td>
+      <td><span class="dot" style="--c:${STAGE_COLOR(t.stage)}"></span>${esc(stageName.get(t.stage))} · <span class="sub">${esc(t.status)}</span></td><td>${esc(t.sprint)}</td></tr>`).join("") +
+    (rows.length ? "" : `<tr><td colspan="6" class="sub">Tidak ada tiket.</td></tr>`) + "</tbody>";
+}
+
+$("#loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("#loginErr").textContent = "";
+  const r = await fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: $("#pw").value }) });
+  if (r.ok) { $("#pw").value = ""; load(); } else { $("#loginErr").textContent = (await r.json().catch(() => ({}))).error || "Gagal masuk"; }
+});
+$("#q").addEventListener("change", (e) => load({ q: e.target.value }));
+$("#mode").addEventListener("change", (e) => {
+  if (e.target.value === "q") return load({ q: DATA?.quarter || DATA?.allSprints?.find((s) => s.id === DATA?.range?.from)?.q || DATA?.allSprints?.[0]?.q });
+  $("#q").classList.add("hidden"); $("#rangeBox").classList.remove("hidden");
+  load({ from: $("#sFrom").value, to: $("#sTo").value });
+});
+["#sFrom", "#sTo"].forEach((id) => $(id).addEventListener("change", () => load({ from: $("#sFrom").value, to: $("#sTo").value })));
+$("#crit").addEventListener("change", (e) => { CRIT = e.target.value; try { localStorage.setItem("fe-dash-crit", CRIT); } catch {} render(); });
+$("#refresh").addEventListener("click", () => load(null, true));
+$("#logout").addEventListener("click", async () => { await fetch("/api/logout", { method: "POST" }); location.reload(); });
+["#fMember", "#fAgent", "#fStage"].forEach((s) => $(s).addEventListener("change", renderTickets));
+$("#fText").addEventListener("input", renderTickets);
+let rz;
+window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(() => DATA && render(), 150); });
+load();
+</script>
+</body>
+</html>
