@@ -233,7 +233,7 @@ export async function buildKpi(quarter, { refresh = false, mapping = loadMapping
   const { titles, missing } = await loadEpicTitles(epicIds);
 
   const warnings = [];
-  for (const m of metrics) if (m.actualDept == null) warnings.push(`${m.name}: Actual % kosong atau tidak terbaca`);
+  for (const m of metrics) if (m.actualDept == null && m.epicIds.length) warnings.push(`${m.name}: Actual % kosong atau tidak terbaca`);
   if (missing.length) warnings.push(`${missing.length} epic tidak bisa dibaca (cek akses integration): ${missing.join(", ")}`);
   for (const e of qmap.extraEpics || []) if (!titles.has(e.epic)) warnings.push(`extraEpics: epic ${e.epic} tidak ditemukan`);
   const unweighted = tickets.filter((t) => t.weight == null).length;
